@@ -3,14 +3,29 @@
 
 #include <stdint.h>
 
-#define MAX_VALUE 16777215 //uint24 max value
-#define VOIE_1 1
-#define VOIE_2 2
-#define VOIE_3 3
-#define VOIE_4 4
-#define VOIE_STATUS 0x0400
+// Constants
+#define MAX_VALUE 0xFFFFFF
+#define VOIE_1 0x01
+#define VOIE_2 0x02
+#define VOIE_3 0x03
+#define VOIE_4 0x04
 
-uint32_t generator_rand_num(void);
-void shuffle_order(uint8_t order[4]);
+// Structure definitions
+typedef struct value_frame_s {
+    uint8_t header;
+    uint8_t value[3];
+} value_frame_t;
 
-#endif /* MODULE_H */
+typedef struct status_frame_s {
+    uint8_t header;
+    uint8_t value;
+} status_frame_t;
+
+typedef struct long_frame_s {
+    uint8_t frame[14];
+} long_frame_t;
+
+// Function declarations
+void generate_frames(void);
+
+#endif // GENERATOR_H
