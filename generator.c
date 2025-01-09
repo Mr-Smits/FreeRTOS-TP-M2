@@ -16,15 +16,17 @@ typedef struct frame_s {
 }frame_t;
 
 uint32_t generator_rand_num(void) {
-    uint32_t randomNumber = rand();
-    uint32_t randomNumberRange = randomNumber % MAX_VALUE;
-    printf("Random Number = %02X\n", randomNumberRange);
-    
+    uint32_t randomNumberRange = rand() % MAX_VALUE;    
     return(randomNumberRange);
 }
 
-uint8_t shuffle_order(int order[4]) {
-
+void shuffle_order(uint8_t order[4]) {
+    for (int i = 3; i > 0; i--) {
+        int j = rand() % (i + 1);
+        uint8_t temp = order[i];
+        order[i] = order[j];
+        order[j] = temp;
+    }
 }
 
 uint32_t voie_value (uint8_t voie, uint32_t value) {
@@ -36,18 +38,21 @@ uint32_t voie_value (uint8_t voie, uint32_t value) {
     frame.value[2] = (value & 0xFF0000) >> 16;
 
     frame.frame = (frame.header << 24) | (frame.value[2] << 16) | (frame.value[1] << 8) | frame.value[0];
-    printf("frame = %08X\n\n", frame.frame);
-
     return frame.frame;
 }
 
 void generate_frames(void) {
-    int order[4] = {VOIE_1, VOIE_2, VOIE_3, VOIE_4};
+    uint8_t order[4] = {VOIE_1, VOIE_2, VOIE_3, VOIE_4};
     shuffle_order(order);
 
     for(int ii = 0; ii < 4; ii++) {
-        uint32_t value_voie = generator_rand_num();
-        uint32_t frame = voie_value(order[ii], value_voie);
+        int frame;
+        if(order[ii] == VOIE_4) frame = 0x0400;
+        else {
+            uint32_t value_voie = generator_rand_num();
+            frame = voie_value(order[ii], value_voie);
+        }
+        printf("%X\n", frame);
     }
 }
 
