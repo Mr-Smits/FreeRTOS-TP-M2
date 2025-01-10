@@ -11,17 +11,17 @@
 #define VOIE_4 0x04
 
 // Structure definitions
-typedef struct value_frame_s {
+typedef struct {
     uint8_t header;
     uint8_t value[3];
 } value_frame_t;
 
-typedef struct status_frame_s {
+typedef struct {
     uint8_t header;
     uint8_t value;
 } status_frame_t;
 
-typedef struct long_frame_s {
+typedef struct {
     uint8_t frame[14];
 } long_frame_t;
 
