@@ -1,23 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <time.h>
-
-// Define constants for channel identification
-#define VOIE_1 0x02  // Changed to match your test data
-#define VOIE_2 0x03
-#define VOIE_3 0x04
-#define TAILLE_TABLEAU 14
-
-typedef struct {
-    time_t horodatage;
-    uint8_t valeur[3];
-} valeur_voie_t;
-
-typedef struct {
-    valeur_voie_t voie1;
-    valeur_voie_t voie2;
-    valeur_voie_t voie3;
-} valeurs_voies_t;
+#include "pretraitement.h"
 
 uint8_t tableau[TAILLE_TABLEAU] = {
     0x02, 0xD4, 0xDF, 0x88,
@@ -26,29 +7,29 @@ uint8_t tableau[TAILLE_TABLEAU] = {
     0xAE, 0x9F
 };
 
-valeurs_voies_t demultiplexage(uint8_t tableau[TAILLE_TABLEAU]) {
+valeurs_voies_t demultiplexage(long_frame_t frame) {
     valeurs_voies_t valeurs = {0};
     int count = 0;
     
     while(count < TAILLE_TABLEAU) {
-        if(tableau[count] == VOIE_1) {
+        if(frame.frame[count] == VOIE_1) {
             valeurs.voie1.horodatage = time(NULL);
             for(int ii = 0; ii < 3; ii++) {
-                valeurs.voie1.valeur[ii] = tableau[count + 1 + ii];
+                valeurs.voie1.valeur[ii] = frame.frame[count + 1 + ii];
             }
             count = count + 4;
         }
-        else if(tableau[count] == VOIE_2) {
+        else if(frame.frame[count] == VOIE_2) {
             valeurs.voie2.horodatage = time(NULL);
             for(int ii = 0; ii < 3; ii++) {
-                valeurs.voie2.valeur[ii] = tableau[count + 1 + ii];
+                valeurs.voie2.valeur[ii] = frame.frame[count + 1 + ii];
             }
             count = count + 4;
         }
-        else if(tableau[count] == VOIE_3) {
+        else if(frame.frame[count] == VOIE_3) {
             valeurs.voie3.horodatage = time(NULL);
             for(int ii = 0; ii < 3; ii++) {
-                valeurs.voie3.valeur[ii] = tableau[count + 1 + ii];
+                valeurs.voie3.valeur[ii] = frame.frame[count + 1 + ii];
             }
             count = count + 4;
         }
@@ -56,17 +37,11 @@ valeurs_voies_t demultiplexage(uint8_t tableau[TAILLE_TABLEAU]) {
             count = count + 1;
         }
     }
+    
     return valeurs;
 }
 
-int main(void) {
-    // Initialisation de la structure
-    valeurs_voies_t valeurs;
-    
-    // Appel de la fonction de démultiplexage
-    valeurs = demultiplexage(tableau);
-    
-    // Affichage des résultats
+void print_voie(valeurs_voies_t valeurs) {
     printf("Voie 1 (timestamp: %ld): ", valeurs.voie1.horodatage);
     for(int i = 0; i < 3; i++) {
         printf("0x%02X ", valeurs.voie1.valeur[i]);
@@ -84,6 +59,6 @@ int main(void) {
         printf("0x%02X ", valeurs.voie3.valeur[i]);
     }
     printf("\n");
-    
-    return 0;
 }
+
+//TODO 3 files de sortie pour les voies 1, 2, et 3

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include "generator.h"
 
 // Generate a random number within the range
@@ -30,7 +29,7 @@ static value_frame_t voie_value(uint8_t voie, uint32_t value) {
 }
 
 // Generate frames and print them
-void generate_frames(void) {
+long_frame_t generate_frames(void) {
     uint8_t order[4] = {VOIE_1, VOIE_2, VOIE_3, VOIE_4};
     shuffle_order(order);
     long_frame_t frame = {0};
@@ -56,4 +55,6 @@ void generate_frames(void) {
         printf("%02X ", frame.frame[ii]);
     }
     printf("\n");
+
+    return frame;
 }

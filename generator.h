@@ -5,6 +5,7 @@
 
 // Constants
 #define MAX_VALUE 0xFFFFFF
+#define TAILLE_TABLEAU 14
 #define VOIE_1 0x01
 #define VOIE_2 0x02
 #define VOIE_3 0x03
@@ -22,10 +23,10 @@ typedef struct {
 } status_frame_t;
 
 typedef struct {
-    uint8_t frame[14];
+    uint8_t frame[TAILLE_TABLEAU];
 } long_frame_t;
 
 // Function declarations
-void generate_frames(void);
+long_frame_t generate_frames(void);
 
 #endif // GENERATOR_H
