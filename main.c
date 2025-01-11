@@ -11,7 +11,6 @@ int main(void) {
         frame = generate_frames();
         valeurs_voies_t valeurs = {0};
         valeurs = demultiplexage(frame);
-        print_voie(valeurs);
         sleep(1);
     }
     return 0;

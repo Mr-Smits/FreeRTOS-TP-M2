@@ -1,3 +1,4 @@
+// pretraitement.h
 #ifndef PRETRAITEMENT_H
 #define PRETRAITEMENT_H
 
@@ -6,14 +7,16 @@
 #include <time.h>
 #include "generator.h"
 
-//Constantes
+// Constants
+#define BYTES_PER_VALUE 3
+#define VALUE_FRAME_SIZE 4
+#define STATUS_FRAME_SIZE 2
 
-
-//Structures
+// Structures
 typedef struct {
     Voie voie;
     time_t horodatage;
-    uint8_t valeur[3];
+    uint8_t valeur[BYTES_PER_VALUE];
 } valeur_voie_t;
 
 typedef struct {
@@ -22,9 +25,7 @@ typedef struct {
     valeur_voie_t voie3;
 } valeurs_voies_t;
 
-//Fonctions
+// Functions
 valeurs_voies_t demultiplexage(long_frame_t frame);
-void print_voie(valeurs_voies_t valeurs);
 
-
-#endif // PRETRAITEMENT
+#endif // PRETRAITEMENT_H
