@@ -11,6 +11,7 @@
 
 //Structures
 typedef struct {
+    Voie voie;
     time_t horodatage;
     uint8_t valeur[3];
 } valeur_voie_t;

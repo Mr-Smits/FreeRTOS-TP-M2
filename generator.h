@@ -6,10 +6,13 @@
 // Constants
 #define MAX_VALUE 0xFFFFFF
 #define TAILLE_TABLEAU 14
-#define VOIE_1 0x01
-#define VOIE_2 0x02
-#define VOIE_3 0x03
-#define VOIE_4 0x04
+
+typedef enum {
+    VOIE_1 = 1,
+    VOIE_2 = 2,
+    VOIE_3 = 3,
+    VOIE_4 = 4
+} Voie;
 
 // Structure definitions
 typedef struct {
