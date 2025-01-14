@@ -43,8 +43,3 @@ void enregistrement_donnees(valeur_voie_t *valeurs, size_t taille) {
     }
     printf("\n");
 }
-
-int main(void) {
-    enregistrement_donnees(valeurs_voie1, sizeof(valeurs_voie1)/sizeof(valeurs_voie1[0]));
-    return 0;
-}

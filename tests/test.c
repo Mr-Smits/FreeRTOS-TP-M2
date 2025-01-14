@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "../generator.h"
+
+#include "test_generator.h"
+
 
 typedef int(testfn_t)(void);
 
@@ -29,6 +31,7 @@ int main(void) {
     test_t tests[] = {
         {&pass, "pass"},
         {&fail, "fail"},
+        {&test_generate_random_value, "generate_random_value"},
         {NULL, NULL} // Sentinel
     };
 

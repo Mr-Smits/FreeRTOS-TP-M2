@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include "generator.h"
 
-static uint32_t generate_random_value(void) {
-    return rand() % (MAX_VALUE + 1);
+uint32_t generate_random_value(void) {
+    return rand() % (MAX_VALUE);
 }
 
-static void generate_voie_order(uint8_t order[VOIE_COUNT]) {
+void generate_voie_order(uint8_t order[VOIE_COUNT]) {
     // Initialize order array
     for (int i = 0; i < VOIE_COUNT; i++) {
         order[i] = i + 1;  // VOIE_1 through VOIE_4
@@ -23,7 +23,7 @@ static void generate_voie_order(uint8_t order[VOIE_COUNT]) {
     }
 }
 
-static value_frame_t create_value_frame(uint8_t voie, uint32_t value) {
+value_frame_t create_value_frame(uint8_t voie, uint32_t value) {
     value_frame_t frame = {
         .header = voie,
         .value = {
@@ -35,7 +35,7 @@ static value_frame_t create_value_frame(uint8_t voie, uint32_t value) {
     return frame;
 }
 
-static status_frame_t create_status_frame(uint8_t voie) {
+status_frame_t create_status_frame(uint8_t voie) {
     status_frame_t frame = {
         .header = voie,
         .value = 0x00
@@ -43,13 +43,13 @@ static status_frame_t create_status_frame(uint8_t voie) {
     return frame;
 }
 
-static void copy_frame_to_buffer(uint8_t* buffer, const uint8_t* source, uint8_t size) {
+void copy_frame_to_buffer(uint8_t* buffer, const uint8_t* source, uint8_t size) {
     for (uint8_t i = 0; i < size; i++) {
         buffer[i] = source[i];
     }
 }
 
-static void print_frame(const uint8_t* frame, size_t size) {
+void print_frame(const uint8_t* frame, size_t size) {
     printf("Generator output = ");
     for (size_t i = 0; i < size; i++) {
         printf("%02X ", frame[i]);
