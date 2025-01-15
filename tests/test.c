@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "test_generator.h"
+#include "test_pretraitement.h"
 
 
 typedef int(testfn_t)(void);
@@ -15,7 +16,7 @@ void test_all(test_t* tests) {
     for (test_t *test = tests; test->call != NULL; test++) {
         int ret = test->call();
         const char *status = ret ? "OK" : "KO"; // Corrected ternary operator
-        printf("%s %s\n", test->name, status);
+        printf("%25s %s\n", test->name, status);
     }
 }
 
@@ -30,12 +31,16 @@ int fail(void) {
 
 int main(void) {
     test_t tests[] = {
+        //Test Generator
         {&test_generate_random_value, "generation_valeur"},
         {&test_generate_voie_order, "generation_ordre"},
         {&test_create_value_frame, "generation_value_frame"},
         {&test_create_status_frame, "generation_status_frame"},
         {&test_copy_frame_to_buffer, "copy_arrays"},
         {&test_generate_frames, "generation_frame"},
+        //Test Pretraitement
+        {&test_process_value_frame, "process_value_frame"},
+        {&test_demultiplexage, "demultiplexage"},
         {NULL, NULL} // Sentinel
     };
 

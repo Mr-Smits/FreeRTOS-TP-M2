@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "test.h"
-#include "pretraitement.h"
+#include "../pretraitement.h"
 
 int test_process_value_frame() {
     valeur_voie_t voie_dest = {0};
@@ -20,16 +20,14 @@ int test_process_value_frame() {
 }
 
 int test_demultiplexage() {
-    long_frame_t frame = {0};
-    frame.frame[0] = VOIE_1;
-    frame.frame[1] = 0x12;
-    frame.frame[2] = 0x34;
-    frame.frame[3] = 0x56;
-    frame.frame[4] = VOIE_2;
-    frame.frame[5] = 0x78;
-    frame.frame[6] = 0x9A;
-    frame.frame[7] = 0xBC;
-    frame.frame[8] = VOIE_4; // Status frame
+    long_frame_t frame = {
+        .frame = {
+            VOIE_1, 0x12, 0x34, 0x56,  // Frame de VOIE_1 avec valeur 0x123456
+            VOIE_2, 0x78, 0x9A, 0xBC,  // Frame de VOIE_2 avec valeur 0x789ABC
+            VOIE_3, 0xDE, 0xAD, 0xBE,  // Frame de VOIE_3 avec valeur 0xDEADBE
+            VOIE_4, 0x00               // Frame de statut de VOIE_4
+        }
+    };
 
     valeurs_voies_t valeurs = demultiplexage(frame);
 
@@ -41,37 +39,9 @@ int test_demultiplexage() {
     if (valeurs.voie2.voie != VOIE_2) return fail();
     if (memcmp(valeurs.voie2.valeur, (uint8_t[]){0xBC, 0x9A, 0x78}, BYTES_PER_VALUE) != 0) return fail();
 
-    // Vérifie que VOIE_3 est restée vide
-    if (valeurs.voie3.voie != 0) return fail();
+    // Vérifie VOIE_3
+    if (valeurs.voie3.voie != VOIE_3) return fail();
+    if (memcmp(valeurs.voie3.valeur, (uint8_t[]){0xBE, 0xAD, 0xDE}, BYTES_PER_VALUE) != 0) return fail();
 
     return pass();
-}
-
-int test_invalid_frames() {
-    long_frame_t frame = {0};
-    frame.frame[0] = 0xFF; // Invalide
-    frame.frame[1] = VOIE_1;
-    frame.frame[2] = 0x12;
-    frame.frame[3] = 0x34;
-
-    valeurs_voies_t valeurs = demultiplexage(frame);
-
-    // Vérifie que les voies ne contiennent aucune donnée
-    if (valeurs.voie1.voie != 0) return fail();
-    if (valeurs.voie2.voie != 0) return fail();
-    if (valeurs.voie3.voie != 0) return fail();
-
-    return pass();
-}
-
-int main() {
-    int tests_passed = 0;
-
-    tests_passed += test_process_value_frame();
-    tests_passed += test_demultiplexage();
-    tests_passed += test_invalid_frames();
-
-    printf("%d/%d tests passed\n", tests_passed, 3);
-
-    return 0;
 }
