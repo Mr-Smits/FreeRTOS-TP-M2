@@ -27,11 +27,15 @@ int fail(void) {
     return 0;
 }
 
+
 int main(void) {
     test_t tests[] = {
-        {&pass, "pass"},
-        {&fail, "fail"},
-        {&test_generate_random_value, "generate_random_value"},
+        {&test_generate_random_value, "generation_valeur"},
+        {&test_generate_voie_order, "generation_ordre"},
+        {&test_create_value_frame, "generation_value_frame"},
+        {&test_create_status_frame, "generation_status_frame"},
+        {&test_copy_frame_to_buffer, "copy_arrays"},
+        {&test_generate_frames, "generation_frame"},
         {NULL, NULL} // Sentinel
     };
 
