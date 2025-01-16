@@ -1,13 +1,12 @@
 // pretraitement.c
 #include "pretraitement.h"
 
-static void process_value_frame(valeur_voie_t* voie_dest, const uint8_t* frame_data, Voie voie_num) {
+void process_value_frame(valeur_voie_t* voie_dest, const uint8_t* frame_data, Voie voie_num) {
     if (!voie_dest || !frame_data) return;
     
     voie_dest->voie = voie_num;
     voie_dest->horodatage = time(NULL);
     
-    // Copie inversée des valeurs (ordre des octets)
     for (int i = 0; i < BYTES_PER_VALUE; i++) {
         voie_dest->valeur[i] = frame_data[BYTES_PER_VALUE - i];
     }
@@ -37,11 +36,11 @@ valeurs_voies_t demultiplexage(long_frame_t frame) {
                 break;
                 
             case VOIE_4:
-                position += STATUS_FRAME_SIZE;  // Skip status frame
+                position += STATUS_FRAME_SIZE;
                 break;
                 
             default:
-                position++;  // Skip invalid data
+                position++;
                 break;
         }
     }

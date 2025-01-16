@@ -77,6 +77,6 @@ long_frame_t generate_frames(void) {
         }
     }
     
-    print_frame(result.frame, TAILLE_TABLEAU);
+    //print_frame(result.frame, TAILLE_TABLEAU);
     return result;
 }

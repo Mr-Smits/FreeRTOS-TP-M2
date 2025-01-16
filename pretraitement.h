@@ -26,6 +26,7 @@ typedef struct {
 } valeurs_voies_t;
 
 // Functions
+void process_value_frame(valeur_voie_t* voie_dest, const uint8_t* frame_data, Voie voie_num);
 valeurs_voies_t demultiplexage(long_frame_t frame);
 
 #endif // PRETRAITEMENT_H
