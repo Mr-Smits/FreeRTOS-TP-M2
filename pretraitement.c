@@ -21,17 +21,17 @@ valeurs_voies_t demultiplexage(long_frame_t frame) {
         
         switch (current_voie) {
             case VOIE_1:
-                process_value_frame(&valeurs.voie1, &frame.frame[position + 1], VOIE_1);
+                process_value_frame(&valeurs.voie1, &frame.frame[position], VOIE_1);
                 position += VALUE_FRAME_SIZE;
                 break;
                 
             case VOIE_2:
-                process_value_frame(&valeurs.voie2, &frame.frame[position + 1], VOIE_2);
+                process_value_frame(&valeurs.voie2, &frame.frame[position], VOIE_2);
                 position += VALUE_FRAME_SIZE;
                 break;
                 
             case VOIE_3:
-                process_value_frame(&valeurs.voie3, &frame.frame[position + 1], VOIE_3);
+                process_value_frame(&valeurs.voie3, &frame.frame[position], VOIE_3);
                 position += VALUE_FRAME_SIZE;
                 break;
                 

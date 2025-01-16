@@ -11,7 +11,7 @@ uint32_t generate_random_value(void) {
 void generate_voie_order(uint8_t order[VOIE_COUNT]) {
     // Initialize order array
     for (int i = 0; i < VOIE_COUNT; i++) {
-        order[i] = i + 1;  // VOIE_1 through VOIE_4
+        order[i] = i + 1;
     }
     
     // Fisher-Yates shuffle
@@ -77,6 +77,5 @@ long_frame_t generate_frames(void) {
         }
     }
     
-    //print_frame(result.frame, TAILLE_TABLEAU);
     return result;
 }
