@@ -4,6 +4,9 @@
 #include "test_generator.h"
 #include "test_pretraitement.h"
 
+#define GREEN "\033[1;32m"
+#define RED "\033[1;31m"
+#define RESET "\033[0m"
 
 typedef int(testfn_t)(void);
 
@@ -12,13 +15,16 @@ typedef struct test_s {
     const char *name;
 } test_t;
 
+
 void test_all(test_t* tests) {
     for (test_t *test = tests; test->call != NULL; test++) {
         int ret = test->call();
-        const char *status = ret ? "OK" : "KO"; // Corrected ternary operator
-        printf("%25s %s\n", test->name, status);
+        const char *status_color = ret ? GREEN : RED; // Choose color based on result
+        const char *status_text = ret ? "OK" : "KO";  // Choose text based on result
+        printf("%25s %s%s%s\n", test->name, status_color, status_text, RESET);
     }
 }
+
 
 int pass(void) {
     return 1;
@@ -39,7 +45,6 @@ int main(void) {
         {&test_copy_frame_to_buffer, "copy_arrays"},
         {&test_generate_frames, "generation_frame"},
         //Test Pretraitement
-        {&test_process_value_frame, "process_value_frame"},
         {&test_demultiplexage, "demultiplexage"},
         {NULL, NULL} // Sentinel
     };

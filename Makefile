@@ -7,7 +7,7 @@ OUTPUT_DIR = output
 $(shell mkdir -p $(OUTPUT_DIR))
 
 # Source files and object files
-SRCS = main.c generator.c pretraitement.c traitement.c
+SRCS = main.c generator.c pretraitement.c traitement.c freertos.c
 OBJS = $(SRCS:%.c=$(OUTPUT_DIR)/%.o)
 
 # Output executable name

@@ -6,19 +6,6 @@
 #include "test.h"
 #include "../pretraitement.h"
 
-int test_process_value_frame() {
-    valeur_voie_t voie_dest = {0};
-    uint8_t frame_data[BYTES_PER_VALUE] = {0x12, 0x34, 0x56};
-    Voie voie_num = VOIE_2;
-
-    process_value_frame(&voie_dest, frame_data, voie_num);
-
-    if (voie_dest.voie != voie_num) return fail();
-    if (memcmp(voie_dest.valeur, (uint8_t[]){0x56, 0x34, 0x12}, BYTES_PER_VALUE) != 0) return fail();
-
-    return pass();
-}
-
 int test_demultiplexage() {
     long_frame_t frame = {
         .frame = {

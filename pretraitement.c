@@ -2,8 +2,7 @@
 #include "pretraitement.h"
 
 void process_value_frame(valeur_voie_t* voie_dest, const uint8_t* frame_data, Voie voie_num) {
-    if (!voie_dest || !frame_data) return;
-    
+
     voie_dest->voie = voie_num;
     voie_dest->horodatage = time(NULL);
     
@@ -21,7 +20,7 @@ valeurs_voies_t demultiplexage(long_frame_t frame) {
         
         switch (current_voie) {
             case VOIE_1:
-                process_value_frame(&valeurs.voie1, &frame.frame[position], VOIE_1);
+                process_value_frame(&valeurs.voie1, &frame.frame[position+1], VOIE_1);
                 position += VALUE_FRAME_SIZE;
                 break;
                 
