@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# ./follow-generic producter.txt or,
+# FOLLOW_FILE=producter.txt ./follow-generic
+
+readonly FILE="${1:-${FOLLOW_FILE}}"
+
+>> "${FILE}"
+clear
+tail -n 0 -f "${FILE}"
